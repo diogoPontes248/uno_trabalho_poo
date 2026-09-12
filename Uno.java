@@ -1,10 +1,5 @@
 package Uno;
 
-//regras modificadas:
-//suporta de 2 a 4 jogadores
-//o +2 e +4 não pulam a vez
-//comprar uma carta passa a vez
-
 import java.util.Scanner;
 
 public class Uno {
@@ -32,23 +27,8 @@ public class Uno {
             jogo.adiciocionarJogador(nomeJogador);
         }
 
-        jogo.inciarMesa();
-        jogo.distribuirCartas();
+        jogo.iniciarJogo();
 
-        for(int i = 0; !jogo.getFimDeJogo(); i++){
-            jogo.verificarHabilidadeDeCompra(i % quantidadeJogadores);
-
-            jogo.rodada(i % quantidadeJogadores);
-
-            jogo.habilidadeCoringa();
-            if(jogo.maoVazia(i % quantidadeJogadores)){
-                jogo.imprimeVencedor(i %  quantidadeJogadores);
-                jogo.fimDeJogo();
-            }
-            jogo.habilidadeInverter();
-            i = jogo.habilidadeDirecao(i);
-            i = jogo.habilidadePular(i);
-        }
         input.close();
     }
 }

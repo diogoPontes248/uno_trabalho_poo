@@ -5,19 +5,20 @@ import Uno.Entidades.Baralhos.Cartas.Carta;
 
 import java.util.ArrayList;
 
-public class Jogador<T extends Baralho>{
+public class Jogador{
     String nome;
-    private ArrayList<Carta> cartas = new ArrayList<>();
+    private ArrayList<Carta> cartas;
 
     public Jogador(String nome) {
         this.nome = nome;
+        this.cartas = new ArrayList<>();
     }
 
     public String getNome(){
         return nome;
     }
 
-    public void pegarMao(T baralho){
+    public void pegarMao(Baralho baralho){
         cartas = baralho.getCartas(7);
     }
 
@@ -51,7 +52,7 @@ public class Jogador<T extends Baralho>{
         return cartas.get(indice);
     }
 
-    public void comprarCarta(T baralho, int quantidade){
+    public void comprarCarta(Baralho baralho, int quantidade){
         for(int i = 0; i < quantidade; i++){
             cartas.add(baralho.getUmaCarta());
         }

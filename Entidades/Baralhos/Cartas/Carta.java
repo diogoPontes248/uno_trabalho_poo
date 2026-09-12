@@ -17,8 +17,4 @@ public class Carta {
         return simbolo;
     }
 
-    public void setSimbolo(String Simbolo) {
-        this.simbolo = Simbolo;
-    }
-
 }

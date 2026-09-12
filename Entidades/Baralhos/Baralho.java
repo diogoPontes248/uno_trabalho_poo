@@ -31,6 +31,10 @@ public abstract class Baralho {
         return cartas.peek();
     }
 
+    public int tamanho(){
+        return cartas.size();
+    }
+
     public void colocarCarta(Carta carta){
         cartas.push(carta);
     }
