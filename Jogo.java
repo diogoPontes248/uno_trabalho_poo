@@ -120,7 +120,7 @@ public class Jogo {
             jogadores.get((indice - 1) % jogadores.size()).comprarCarta(baralho, 4);
         }
         else if((valorAtual.equals("Wild +4") || valorAtual.equals("K")) && cartaTrocada){
-            jogadores.get((indice + 1) % jogadores.size()).comprarCarta(baralho, 2);
+            jogadores.get((indice + 1) % jogadores.size()).comprarCarta(baralho, 4);
         }
     }
 
