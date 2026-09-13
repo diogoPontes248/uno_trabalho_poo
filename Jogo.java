@@ -121,8 +121,8 @@ public class Jogo {
         if((valorAtual.equals("Wild +4") || valorAtual.equals("Vermelho")) && inverter){
             jogadores.get((indice - 1) % jogadores.size()).comprarCarta(baralho, 4);
         }
-        else if(valorAtual.equals("Wild +4") || valorAtual.equals("K")){
-            jogadores.get((indice + 1) % jogadores.size()).comprarCarta(baralho, 2);
+        else if(valorAtual.equals("Wild +4") || valorAtual.equals("Vermelho")){
+            jogadores.get((indice + 1) % jogadores.size()).comprarCarta(baralho, 4);
         }
     }
 
