@@ -17,7 +17,6 @@ public class Jogo {
     private String naipeAtual;
     private String valorAtual;
     private boolean inverter;
-    private boolean habilidadeAtivada;
     private boolean cartaTrocada;
     private boolean fimDeJogo;
 
@@ -33,7 +32,6 @@ public class Jogo {
         jogadores = new ArrayList<>();
         mesa = new Stack<>();
         inverter = false;
-        habilidadeAtivada = false;
         cartaTrocada = true;
         fimDeJogo = false;
     }
@@ -73,10 +71,10 @@ public class Jogo {
     }
 
     public int habilidadePular(int indice){
-        if((valorAtual.equals("Pular") || valorAtual.equals("J")) && inverter){
+        if((valorAtual.equals("Pular") || valorAtual.equals("J")) && inverter && cartaTrocada){
             indice--;
         }
-        else if((valorAtual.equals("Pular") || valorAtual.equals("J"))){
+        else if((valorAtual.equals("Pular") || valorAtual.equals("J")) && cartaTrocada){
             indice++;
         }
         return indice;
@@ -85,7 +83,7 @@ public class Jogo {
     public void habilidadeCoringa(){
         Scanner sc = new Scanner(System.in);
         String naipe;
-        if(naipeAtual.equals("Wild")){
+        if(naipeAtual.equals("Wild") && cartaTrocada){
             System.out.println("-Vermelho");
             System.out.println("-Amarelo");
             System.out.println("-Verde");
@@ -94,7 +92,7 @@ public class Jogo {
             naipe = sc.nextLine();
             naipeAtual = naipe;
         }
-        if(naipeAtual.equals("Coringa")){
+        if(naipeAtual.equals("Coringa") && cartaTrocada){
             System.out.println("-Ouros");
             System.out.println("-Copas");
             System.out.println("-Espadas");
@@ -106,23 +104,23 @@ public class Jogo {
     }
 
     public void habilidadeInverter(){
-        if(valorAtual.equals("Inverter") || valorAtual.equals("Q")){
+        if((valorAtual.equals("Inverter") || valorAtual.equals("Q")) && cartaTrocada){
             inverter = !inverter;
         }
     }
 
     public void HabilidadeDeCompra(int indice){
-        if((valorAtual.equals("+2") || valorAtual.equals("K")) && inverter){
+        if((valorAtual.equals("+2") || valorAtual.equals("K")) && inverter && cartaTrocada){
             jogadores.get((indice - 1) % jogadores.size()).comprarCarta(baralho, 2);
         }
-        else if(valorAtual.equals("+2") || valorAtual.equals("K")){
+        else if((valorAtual.equals("+2") || valorAtual.equals("K")) && cartaTrocada){
             jogadores.get((indice + 1) % jogadores.size()).comprarCarta(baralho, 2);
         }
-        if((valorAtual.equals("Wild +4") || valorAtual.equals("Vermelho")) && inverter){
+        if((valorAtual.equals("Wild +4") || valorAtual.equals("Vermelho")) && inverter && cartaTrocada){
             jogadores.get((indice - 1) % jogadores.size()).comprarCarta(baralho, 4);
         }
-        else if(valorAtual.equals("Wild +4") || valorAtual.equals("Vermelho")){
-            jogadores.get((indice + 1) % jogadores.size()).comprarCarta(baralho, 4);
+        else if((valorAtual.equals("Wild +4") || valorAtual.equals("K")) && cartaTrocada){
+            jogadores.get((indice + 1) % jogadores.size()).comprarCarta(baralho, 2);
         }
     }
 
@@ -174,25 +172,18 @@ public class Jogo {
 
             rodada(i);
 
-            habilidadeAtivada = valorAtual.equals("+2") || valorAtual.equals("K") ||
-                                valorAtual.equals("Inverter") || valorAtual.equals("Q") ||
-                                naipeAtual.equals("Wild") || naipeAtual.equals("Coringa") ||
-                                valorAtual.equals("Pular") || valorAtual.equals("J");
-
-            if(habilidadeAtivada && cartaTrocada) {
-                HabilidadeDeCompra(i);
-                habilidadeCoringa();
-                habilidadeInverter();
-                i = habilidadePular(i);
-            }
-
-            if(inverter){
-                i = i + jogadores.size() - 2;
-            }
-
             if(maoVazia(i)){
                 imprimeVencedor(i);
                 fimDeJogo = true;
+            }
+
+            HabilidadeDeCompra(i);
+            habilidadeCoringa();
+            habilidadeInverter();
+            i = habilidadePular(i);
+
+            if(inverter){
+                i = i + jogadores.size() - 2;
             }
         }
     }
